@@ -14,7 +14,7 @@
             </div>
 
             <div class="right-div">
-                <a href="logout.php" class="btn btn-danger pull-right">LOG OUT</a>
+                <a href="logout.php" class="btn btn-danger pull-right" onclick="return confirm('Are you sure to logout?')">LOG OUT</a>
             </div>
         </div>
     </div>
