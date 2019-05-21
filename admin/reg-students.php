@@ -86,6 +86,7 @@ header('location:reg-students.php');
                                         <tr>
                                             <th>#</th>
                                             <th>Student ID</th>
+                                            <th>Profile Picture</th>
                                             <th>Student Name</th>
                                             <th>Email id </th>
                                             <th>Mobile Number</th>
@@ -107,6 +108,7 @@ foreach($results as $result)
                                         <tr class="odd gradeX">
                                             <td class="center"><?php echo htmlentities($cnt);?></td>
                                             <td class="center"><?php echo htmlentities($result->StudentId);?></td>
+                                            <td class="center"><img src="../studentdp/<?php echo htmlentities($result->profilepic) ?>" height="160" width="120"></td>
                                             <td class="center"><?php echo htmlentities($result->FullName);?></td>
                                             <td class="center"><?php echo htmlentities($result->EmailId);?></td>
                                             <td class="center"><?php echo htmlentities($result->MobileNumber);?></td>
