@@ -8,35 +8,105 @@ header('location:index.php');
 }
 else{ 
 
+    $target_dir = "uploads/";
+    $target_file = $target_dir . basename($_FILES["bookcover"]["name"]);
+    $uploadOk = 1;
+    $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+    /*
+    // Check if image file is a actual image or fake image
+    if(isset($_POST["add"])) {
+        $check = getimagesize($_FILES["bookcover"]["tmp_name"]);
+        if($check !== false) {
+            echo "File is an image - " . $check["mime"] . ".";
+            $uploadOk = 1;
+        } else {
+            echo "File is not an image.";
+            $uploadOk = 0;
+        }
+    }*/
+
 if(isset($_POST['add']))
 {
-$bookname=$_POST['bookname'];
-$category=$_POST['category'];
-$author=$_POST['author'];
-$isbn=$_POST['isbn'];
-$bookdesc=$_POST['bookdesc'];
-$price=$_POST['price'];
-$sql="INSERT INTO  tblbooks(BookName,CatId,AuthorId,ISBNNumber, bookdesc, BookPrice) VALUES(:bookname,:category,:author,:isbn,:bookdesc,:price)";
-$query = $dbh->prepare($sql);
-$query->bindParam(':bookname',$bookname,PDO::PARAM_STR);
-$query->bindParam(':category',$category,PDO::PARAM_STR);
-$query->bindParam(':author',$author,PDO::PARAM_STR);
-$query->bindParam(':isbn',$isbn,PDO::PARAM_STR);
-$query->bindParam(':bookdesc',$bookdesc,PDO::PARAM_STR);
-$query->bindParam(':price',$price,PDO::PARAM_STR);
-$query->execute();
-$lastInsertId = $dbh->lastInsertId();
-if($lastInsertId)
-{
-$_SESSION['msg']="Book Listed successfully";
-header('location:manage-books.php');
-}
-else 
-{
-$_SESSION['error']="Something went wrong. Please try again";
-header('location:manage-books.php');
-}
 
+    $check = getimagesize($_FILES["bookcover"]["tmp_name"]);
+    if($check !== false) {
+        echo "File is an image - " . $check["mime"] . ".";
+        $uploadOk = 1;
+    } else {
+        echo "File is not an image.";
+        $uploadOk = 0;
+        $errMsg = "not image";
+    }
+
+    // Check if file already exists
+    if (file_exists($target_file)) {
+        echo "Sorry, file already exists.";
+        $uploadOk = 0;
+        $errMsg = "alr exists";
+    }
+    // Check file size
+    if ($_FILES["bookcover"]["size"] > 500000) {
+        echo "Sorry, your file is too large.";
+        $uploadOk = 0;
+        $errMsg = "too big";
+    }
+    // Allow certain file formats
+    if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "PNG"
+    && $imageFileType != "gif" ) {
+        echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+        $uploadOk = 0;
+        $errMsg = "format";
+    }
+
+    // Check if $uploadOk is set to 0 by an error
+    if ($uploadOk == 0) {
+        echo "Sorry, your file was not uploaded.";
+    // if everything is ok, try to upload file
+    } else {
+        if (move_uploaded_file($_FILES["bookcover"]["tmp_name"], $target_file)) {
+            echo "The file ". basename( $_FILES["bookcover"]["name"]). " has been uploaded.";
+        } else {
+            echo "Sorry, there was an error uploading your file.";
+            $uploadOk = 0;
+            $errMsg = "move error";
+        }
+    }
+
+    if($uploadOk != 0){
+
+        $bookname=$_POST['bookname'];
+        $category=$_POST['category'];
+        $author=$_POST['author'];
+        $isbn=$_POST['isbn'];
+        $bookdesc=$_POST['bookdesc'];
+        $price=$_POST['price'];
+        $bookcover=basename( $_FILES["bookcover"]["name"]);
+        $sql="INSERT INTO  tblbooks(BookName,CatId,AuthorId,ISBNNumber, bookdesc, BookPrice, bookcover) VALUES(:bookname,:category,:author,:isbn,:bookdesc,:price,:bookcover)";
+        $query = $dbh->prepare($sql);
+        $query->bindParam(':bookname',$bookname,PDO::PARAM_STR);
+        $query->bindParam(':category',$category,PDO::PARAM_STR);
+        $query->bindParam(':author',$author,PDO::PARAM_STR);
+        $query->bindParam(':isbn',$isbn,PDO::PARAM_STR);
+        $query->bindParam(':bookdesc',$bookdesc,PDO::PARAM_STR);
+        $query->bindParam(':price',$price,PDO::PARAM_STR);
+        $query->bindParam(':bookcover',$bookcover,PDO::PARAM_STR);
+        $query->execute();
+        $lastInsertId = $dbh->lastInsertId();
+        if($lastInsertId)
+        {
+        $_SESSION['msg']="Book Listed successfully";
+        header('location:manage-books.php');
+        }
+        else 
+        {
+        $_SESSION['error']="Something went wrong. Please try again";
+        header('location:manage-books.php');
+        }
+    }else 
+    {
+    $_SESSION['error']="Something went wrong. Please try again";
+    header('location:manage-books.php');
+    }
 }
 ?>
 <!DOCTYPE html>
@@ -79,7 +149,7 @@ header('location:manage-books.php');
 Book Info
 </div>
 <div class="panel-body">
-<form role="form" method="post">
+<form role="form" method="post" enctype="multipart/form-data">
 <div class="form-group">
 <label>Book Name<span style="color:red;">*</span></label>
 <input class="form-control" type="text" name="bookname" autocomplete="off"  required />
@@ -143,6 +213,12 @@ foreach($results as $result)
  <label>Price<span style="color:red;">*</span></label>
  <input class="form-control" type="text" name="price" autocomplete="off"   required="required" />
  </div>
+
+ <div class="form-group">
+ <label>Book Cover<span style="color:red;">*</span></label>
+ <input type="file" name="bookcover" id="bookcover">
+ </div>
+
 <button type="submit" name="add" class="btn btn-info">Add </button>
 
                                     </form>
