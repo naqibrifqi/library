@@ -6,6 +6,73 @@ if (strlen($_SESSION['alogin']) == 0) {
     header('location:index.php');
 } else {
 
+    $target_dir = "uploads/";
+$target_file = $target_dir . basename($_FILES["bookcover"]["name"]);
+$uploadOk = 1;
+$imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+
+if(isset($_POST['change']))
+{
+    $check = getimagesize($_FILES["bookcover"]["tmp_name"]);
+    if ($check !== false) {
+        echo "File is an image - " . $check["mime"] . ".";
+        $uploadOk = 1;
+    } else {
+        echo "File is not an image.";
+        $uploadOk = 0;
+        $errMsg = "not image";
+    }
+
+    // Check if file already exists
+    if (file_exists($target_file)) {
+        echo "Sorry, file already exists.";
+        $uploadOk = 0;
+        $errMsg = "alr exists";
+    }
+    // Check file size
+    if ($_FILES["bookcover"]["size"] > 500000) {
+        echo "Sorry, your file is too large.";
+        $uploadOk = 0;
+        $errMsg = "too big";
+    }
+    // Allow certain file formats
+    if (
+        $imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "PNG"
+        && $imageFileType != "gif"
+    ) {
+        echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+        $uploadOk = 0;
+        $errMsg = "format";
+    }
+
+    // Check if $uploadOk is set to 0 by an error
+    if ($uploadOk == 0) {
+        echo "Sorry, your file was not uploaded.";
+        // if everything is ok, try to upload file
+    } else {
+        if (move_uploaded_file($_FILES["bookcover"]["tmp_name"], $target_file)) {
+            echo "The file " . basename($_FILES["bookcover"]["name"]) . " has been uploaded.";
+        } else {
+            echo "Sorry, there was an error uploading your file.";
+            $uploadOk = 0;
+            $errMsg = "move error";
+        }
+    }    
+if ($uploadOk != 0) {  
+$bookid = intval($_GET['bookid']); 
+$bookcover = basename($_FILES["bookcover"]["name"]);
+
+$sql="update tblbooks set bookcover=:bookcover where id=:bookid";
+$query = $dbh->prepare($sql);
+$query->bindParam(':bookid', $bookid, PDO::PARAM_STR);
+$query->bindParam(':bookcover', $bookcover, PDO::PARAM_STR);
+$query->execute();
+
+echo '<script>alert("Your profile has been updated")</script>';
+} else
+echo "<script>alert('Something went wrong. Please try again [IMAGE_ERR]');</script>";
+}
+
     if (isset($_POST['update'])) {
         $bookname = $_POST['bookname'];
         $category = $_POST['category'];
@@ -72,10 +139,30 @@ if (strlen($_SESSION['alogin']) == 0) {
                                     Book Info
                                 </div>
                                 <div class="panel-body">
+                                <!-- Modal -->
+                                    <div class="modal fade" id="myModal" role="dialog">
+                                        <div class="modal-dialog modal-sm">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                            <h4 class="modal-title">Change Book Cover</h4>
+                                            </div>
+                                            <form name="changecover" method="post" enctype="multipart/form-data">
+                                            <div class="modal-body">
+                                            <input type="file" name="bookcover" id="bookcover">
+                                            </div>
+                                            <div class="modal-footer">
+                                            <button type="submit" name="change" class="btn btn-default">Submit</button>
+                                            <button  type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                            </div>
+                                            </form>
+                                        </div>
+                                        </div>
+                                    </div>
                                     <form role="form" method="post">
                                         <?php
                                         $bookid = intval($_GET['bookid']);
-                                        $sql = "SELECT tblbooks.BookName,tblcategory.CategoryName,tblcategory.id as cid,tblauthors.AuthorName,tblauthors.id as athrid,tblbooks.ISBNNumber,tblbooks.BookPrice,tblbooks.bookdesc,tblbooks.quantity,tblbooks.id as bookid from  tblbooks join tblcategory on tblcategory.id=tblbooks.CatId join tblauthors on tblauthors.id=tblbooks.AuthorId where tblbooks.id=:bookid";
+                                        $sql = "SELECT tblbooks.BookName,tblcategory.CategoryName,tblcategory.id as cid,tblauthors.AuthorName,tblauthors.id as athrid,tblbooks.ISBNNumber,tblbooks.BookPrice,tblbooks.bookcover,tblbooks.bookdesc,tblbooks.quantity,tblbooks.id as bookid from  tblbooks join tblcategory on tblcategory.id=tblbooks.CatId join tblauthors on tblauthors.id=tblbooks.AuthorId where tblbooks.id=:bookid";
                                         $query = $dbh->prepare($sql);
                                         $query->bindParam(':bookid', $bookid, PDO::PARAM_STR);
                                         $query->execute();
@@ -83,6 +170,13 @@ if (strlen($_SESSION['alogin']) == 0) {
                                         $cnt = 1;
                                         if ($query->rowCount() > 0) {
                                             foreach ($results as $result) {               ?>
+                                                
+                                                <div class="form-group">
+                                                <img src="uploads/<?php echo htmlentities($result->bookcover) ?>" height="160" width="120">
+                                                <!-- Trigger the modal with a button -->
+                                                <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal">Change Book Cover</button>
+
+                                                </div>
 
                                                 <div class="form-group">
                                                     <label>Book Name<span style="color:red;">*</span></label>
@@ -112,8 +206,8 @@ if (strlen($_SESSION['alogin']) == 0) {
                                                     } ?>
                                                     </select>
                                                 </div>
-
-
+                                                
+                                                
                                                 <div class="form-group">
                                                     <label> Author<span style="color:red;">*</span></label>
                                                     <select class="form-control" name="author" required="required">
