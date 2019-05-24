@@ -62,8 +62,13 @@ if (strlen($_SESSION['alogin']) == 0) {
             echo "Sorry, your file was not uploaded.";
             // if everything is ok, try to upload file
         } else {
-            if (move_uploaded_file($_FILES["bookcover"]["tmp_name"], $target_file)) {
-                echo "The file " . basename($_FILES["bookcover"]["name"]) . " has been uploaded.";
+
+            $temp = explode(".", $_FILES["bookcover"]["name"]);
+            $newfilename = round(microtime(true)) . "." . end($temp);
+            //move_uploaded_file($_FILES["file"]["tmp_name"], $target_dir . $newfilename);
+
+            if (move_uploaded_file($_FILES["bookcover"]["tmp_name"], $target_dir . $newfilename)) {
+                echo "The file " . $newfilename . " has been uploaded.";
             } else {
                 echo "Sorry, there was an error uploading your file.";
                 $uploadOk = 0;
@@ -79,9 +84,10 @@ if (strlen($_SESSION['alogin']) == 0) {
             $isbn = $_POST['isbn'];
             $bookdesc = $_POST['bookdesc'];
             $quantity = $_POST['quantity'];
+            $shelf = $_POST['shelf'];
             $price = $_POST['price'];
-            $bookcover = basename($_FILES["bookcover"]["name"]);
-            $sql = "INSERT INTO  tblbooks(BookName,CatId,AuthorId,ISBNNumber, bookdesc, quantity, BookPrice, bookcover) VALUES(:bookname,:category,:author,:isbn,:bookdesc,:quantity,:price,:bookcover)";
+            $bookcover = basename($newfilename);
+            $sql = "INSERT INTO  tblbooks(BookName,CatId,AuthorId,ISBNNumber, bookdesc, quantity, BookPrice, shelf, bookcover) VALUES(:bookname,:category,:author,:isbn,:bookdesc,:quantity,:price,:shelf,:bookcover)";
             $query = $dbh->prepare($sql);
             $query->bindParam(':bookname', $bookname, PDO::PARAM_STR);
             $query->bindParam(':category', $category, PDO::PARAM_STR);
@@ -90,6 +96,7 @@ if (strlen($_SESSION['alogin']) == 0) {
             $query->bindParam(':bookdesc', $bookdesc, PDO::PARAM_STR);
             $query->bindParam(':quantity', $quantity, PDO::PARAM_STR);
             $query->bindParam(':price', $price, PDO::PARAM_STR);
+            $query->bindParam(':shelf', $shelf, PDO::PARAM_STR);
             $query->bindParam(':bookcover', $bookcover, PDO::PARAM_STR);
             $query->execute();
             $lastInsertId = $dbh->lastInsertId();
@@ -142,7 +149,7 @@ if (strlen($_SESSION['alogin']) == 0) {
 
                     </div>
                     <div class="row">
-                        <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3"">
+                        <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
     <div class=" panel panel-info">
                             <div class="panel-heading">
                                 Book Info
@@ -151,12 +158,12 @@ if (strlen($_SESSION['alogin']) == 0) {
                                 <form role="form" method="post" enctype="multipart/form-data">
                                     <div class="form-group">
                                         <label>Book Name<span style="color:red;">*</span></label>
-                                        <input class="form-control" type="text" name="bookname" autocomplete="off" required />
+                                        <input class="form-control" type="text" name="bookname" autocomplete="off" required value="<?php if(isset($_POST['bookname'])) echo $_POST['bookname']; ?>"/>
                                     </div>
 
                                     <div class="form-group">
                                         <label> Category<span style="color:red;">*</span></label>
-                                        <select class="form-control" name="category" required="required">
+                                        <select class="form-control" name="category" required="required" value="<?php if(isset($_POST['category'])) echo $_POST['category']; ?>">
                                             <option value=""> Select Category</option>
                                             <?php
                                             $status = 1;
@@ -177,7 +184,7 @@ if (strlen($_SESSION['alogin']) == 0) {
 
                                     <div class="form-group">
                                         <label> Author<span style="color:red;">*</span></label>
-                                        <select class="form-control" name="author" required="required">
+                                        <select class="form-control" name="author" required="required" value="<?php if(isset($_POST['author'])) echo $_POST['author']; ?>">
                                             <option value=""> Select Author</option>
                                             <?php
 
@@ -196,24 +203,29 @@ if (strlen($_SESSION['alogin']) == 0) {
 
                                     <div class="form-group">
                                         <label>Book Synopsis<span style="color:red;">*</span></label>
-                                        <input class="form-control" type="text" name="bookdesc" required="required" autocomplete="off" />
+                                        <input class="form-control" type="text" name="bookdesc" required="required" autocomplete="off" value="<?php if(isset($_POST['bookdesc'])) echo $_POST['bookdesc']; ?>"/>
                                         <p class="help-block">Brief synopsis about the book</p>
                                     </div>
 
                                     <div class="form-group">
                                         <label>ISBN Number<span style="color:red;">*</span></label>
-                                        <input class="form-control" type="text" name="isbn" required="required" autocomplete="off" />
+                                        <input class="form-control" type="text" name="isbn" required="required" autocomplete="off" value="<?php if(isset($_POST['isbn'])) echo $_POST['isbn']; ?>"/>
                                         <p class="help-block">An ISBN is an International Standard Book Number.ISBN Must be unique</p>
                                     </div>
 
                                     <div class="form-group">
                                         <label>Quantity<span style="color:red;">*</span></label>
-                                        <input class="form-control" type="text" name="quantity" required="required" autocomplete="off" />
+                                        <input class="form-control" type="text" name="quantity" required="required" autocomplete="off" value="<?php if(isset($_POST['quantity'])) echo $_POST['quantity']; ?>"/>
                                     </div>
 
                                     <div class="form-group">
                                         <label>Price<span style="color:red;">*</span></label>
-                                        <input class="form-control" type="text" name="price" autocomplete="off" required="required" />
+                                        <input class="form-control" type="text" name="price" autocomplete="off" required="required" value="<?php if(isset($_POST['price'])) echo $_POST['price']; ?>"/>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Shelf<span style="color:red;">*</span></label>
+                                        <input class="form-control" type="text" name="shelf" autocomplete="off" required="required" value="<?php if(isset($_POST['shelf'])) echo $_POST['shelf']; ?>"/>
                                     </div>
 
                                     <div class="form-group">
