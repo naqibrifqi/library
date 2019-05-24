@@ -9,10 +9,19 @@ if (strlen($_SESSION['alogin']) == 0) {
     if (isset($_POST['issue'])) {
         $studentid = strtoupper($_POST['studentid']);
         $bookid = $_POST['bookdetails'];
-        $sql = "INSERT INTO  tblissuedbookdetails(StudentID,BookId) VALUES(:studentid,:bookid)";
+
+        // Get current date
+        $currDate = date("Y-m-d h:i:s");
+        //$expectedDate = Date('Y-m-d', strotime("+14 days"));
+        $expectedDate = new DateTime($currDate);
+        $expectedDate->add(new DateInterval('P14D'));
+
+        
+        $sql = "INSERT INTO  tblissuedbookdetails(StudentID,BookId,expectedReturnDate) VALUES(:studentid,:bookid,:expectedDate)";
         $query = $dbh->prepare($sql);
         $query->bindParam(':studentid', $studentid, PDO::PARAM_STR);
         $query->bindParam(':bookid', $bookid, PDO::PARAM_STR);
+        $query->bindParam(':expectedDate', $expectedDate->format('Y-m-d'), PDO::PARAM_STR);
         $query->execute();
         $lastInsertId = $dbh->lastInsertId();
         if ($lastInsertId) {
@@ -31,6 +40,10 @@ if (strlen($_SESSION['alogin']) == 0) {
             $stmt->execute();
             $updated = $dbh->updated();
             if($updated){
+                header('location:manage-issued-books.php');
+            }else{
+                $_SESSION['error'] = "Something went wrong. Please try again";
+                header('location:manage-issued-books.php');
             }
 
 

@@ -15,10 +15,95 @@ if (strlen($_SESSION['alogin']) == 0) {
         $query->bindParam(':rid', $rid, PDO::PARAM_STR);
         $query->bindParam(':fine', $fine, PDO::PARAM_STR);
         $query->bindParam(':rstatus', $rstatus, PDO::PARAM_STR);
-        $query->execute();
+        //$query->execute();
+        if($query->execute()){
+            $sql2 = "SELECT BookId FROM tblissuedbookdetails WHERE id=:rid LIMIT 1";
+            $query2 = $dbh->prepare($sql2);
+            $query2->bindParam(':rid', $rid, PDO::PARAM_STR);
+            if($query2->execute()){
+                $results = $query2->fetchAll(PDO::FETCH_OBJ);
+                if($query2->rowCount() > 0){
+                    foreach($results as $result){
+                        $sql3 = "UPDATE tblbooks SET quantity = quantity + 1 WHERE id = :bookid";
+                        $query3 = $dbh->prepare($sql3);
+                        $query3->bindParam(':bookid', $result->BookId, PDO::PARAM_STR);
+                        if($query3->execute()){
+                            $_SESSION['msg'] = "Book Returned successfully";
+                            header('location:manage-issued-books.php');
+                        }else{
+                            $_SESSION['error'] = "Problem returning books.";
+                            header('location:manage-issued-books.php');
+                        }
+                    }
+                }
+                /*foreach($results as $result){
+                    $sql3 = "UPDATE tblbooks SET quantity = quantity + 1 WHERE id = :bookid";
+                    $query3 = $dbh->prepare($sql3);
+                    $query3->bindParam(':bookid', $result->BookId, PDO::PARAM_STR);
+                    if($query3->execute()){
+                        $_SESSION['msg'] = "Book Returned successfully";
+                        header('location:manage-issued-books.php');
+                    }else{
+                        $_SESSION['error'] = "Problem returning books.";
+                        header('location:manage-issued-books.php');
+                    }
+                }*/
+            }
+        }
 
-        $_SESSION['msg'] = "Book Returned successfully";
-        header('location:manage-issued-books.php');
+        /*$sql2 = "SELECT BookId FROM tblissuedbookdetails WHERE id = :rid";
+        $query2 = $dbh->prepare($sql2);
+        $query2->bindParam(':rid', $rid, PDO::PARAM_STR);
+        $query2->execute();
+
+        if($query2->rowCount() > 0){
+            foreach($results as $result){
+                $sql3 = "UPDATE tblbooks SET quantity = quantity + 1 WHERE id = :bookid";
+                $query3 = $dbh->prepare($sql3);
+                $query3->bindParam(':bookid', $result->BookId, PDO::PARAM_STR);
+                $query3->execute();
+                $updated2 = $dbh->updated();
+                if($updated2){
+                    $_SESSION['msg'] = "Book Returned successfully";
+                    header('location:manage-issued-books.php');
+                }else{
+                    $_SESSION['error'] = "Problem returning books.";
+                    header('location:manage-issued-books.php');
+                }
+            }
+        }
+
+        //$updated = $dbh->updated();
+
+        /*if($updated){
+            $_SESSION['msg'] = "Book Returned successfully";
+            header('location:manage-issued-books.php');
+            //$sql3 = "UPDATE tblbooks SET quantity = quantity + 1 WHERE "
+            /*$sql2 = "SELECT BookId FROM tblissuedbookdetails WHERE id = :rid LIMIT 1";
+            $query2 = $dbh->prepare($sql2);
+            $query2->bindParam(':rid', $rid, PDO::PARAM_STR);
+            $query2->execute();
+
+            if($query2->rowCount() > 0){
+                foreach($results as $result){
+                    $sql3 = "UPDATE tblbooks SET quantity = quantity + 1 WHERE id = :bookid";
+                    $query3 = $dbh->prepare($sql3);
+                    $query3->bindParam(':bookid', $result->BookId, PDO::PARAM_STR);
+                    $query3->execute();
+                    $updated2 = $dbh->updated();
+                    if($updated2){
+                        $_SESSION['msg'] = "Book Returned successfully";
+                        header('location:manage-issued-books.php');
+                    }else{
+                        $_SESSION['error'] = "Problem returning books.";
+                        header('location:manage-issued-books.php');
+                    }
+                }
+            }
+        }else{
+            $_SESSION['error'] = "Problem returning books.";
+            header('location:manage-issued-books.php');
+        }*/
     }
     ?>
     <!DOCTYPE html>

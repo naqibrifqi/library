@@ -114,12 +114,13 @@ if (strlen($_SESSION['alogin']) == 0) {
                                                 <th>Book Synopsis</th>
                                                 <th>Quantity</th>
                                                 <th>Price</th>
+                                                <th>Shelf</th>
                                                 <th>Cover</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <?php $sql = "SELECT tblbooks.BookName,tblcategory.CategoryName,tblauthors.AuthorName,tblbooks.ISBNNumber,tblbooks.bookdesc,tblbooks.quantity,tblbooks.BookPrice,tblbooks.bookcover,tblbooks.id as bookid from  tblbooks join tblcategory on tblcategory.id=tblbooks.CatId join tblauthors on tblauthors.id=tblbooks.AuthorId";
+                                            <?php $sql = "SELECT tblbooks.BookName,tblcategory.CategoryName,tblauthors.AuthorName,tblbooks.ISBNNumber,tblbooks.bookdesc,tblbooks.quantity,tblbooks.BookPrice,tblbooks.shelf,tblbooks.bookcover,tblbooks.id as bookid from  tblbooks join tblcategory on tblcategory.id=tblbooks.CatId join tblauthors on tblauthors.id=tblbooks.AuthorId";
                                             $query = $dbh->prepare($sql);
                                             $query->execute();
                                             $results = $query->fetchAll(PDO::FETCH_OBJ);
@@ -135,6 +136,7 @@ if (strlen($_SESSION['alogin']) == 0) {
                                                         <td class="center"><?php echo htmlentities($result->bookdesc); ?></td>
                                                         <td class="center"><?php echo htmlentities($result->quantity); ?></td>
                                                         <td class="center"><?php echo htmlentities($result->BookPrice); ?></td>
+                                                        <td class="center"><?php echo htmlentities($result->shelf); ?></td>
                                                         <td class="center">
                                                             <img src="uploads/<?php echo htmlentities($result->bookcover) ?>" height="160" width="120">
                                                         </td>

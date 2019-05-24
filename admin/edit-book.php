@@ -14,8 +14,9 @@ if (strlen($_SESSION['alogin']) == 0) {
         $bookdesc = $_POST['bookdesc'];
         $quantity = $_POST['quantity'];
         $price = $_POST['price'];
+        $shelf = $_POST['shelf'];
         $bookid = intval($_GET['bookid']);
-        $sql = "update  tblbooks set BookName=:bookname,CatId=:category,AuthorId=:author,ISBNNumber=:isbn,bookdesc=:bookdesc,quantity=:quantity,BookPrice=:price where id=:bookid";
+        $sql = "update  tblbooks set BookName=:bookname,CatId=:category,AuthorId=:author,ISBNNumber=:isbn,bookdesc=:bookdesc,quantity=:quantity,BookPrice=:price,shelf=:shelf where id=:bookid";
         $query = $dbh->prepare($sql);
         $query->bindParam(':bookname', $bookname, PDO::PARAM_STR);
         $query->bindParam(':category', $category, PDO::PARAM_STR);
@@ -24,6 +25,7 @@ if (strlen($_SESSION['alogin']) == 0) {
         $query->bindParam(':bookdesc', $bookdesc, PDO::PARAM_STR);
         $query->bindParam(':quantity', $quantity, PDO::PARAM_STR);
         $query->bindParam(':price', $price, PDO::PARAM_STR);
+        $query->bindParam(':shelf', $shelf, PDO::PARAM_STR);
         $query->bindParam(':bookid', $bookid, PDO::PARAM_STR);
         $query->execute();
         $_SESSION['msg'] = "Book info updated successfully";
@@ -75,7 +77,7 @@ if (strlen($_SESSION['alogin']) == 0) {
                                     <form role="form" method="post">
                                         <?php
                                         $bookid = intval($_GET['bookid']);
-                                        $sql = "SELECT tblbooks.BookName,tblcategory.CategoryName,tblcategory.id as cid,tblauthors.AuthorName,tblauthors.id as athrid,tblbooks.ISBNNumber,tblbooks.BookPrice,tblbooks.bookdesc,tblbooks.quantity,tblbooks.id as bookid from  tblbooks join tblcategory on tblcategory.id=tblbooks.CatId join tblauthors on tblauthors.id=tblbooks.AuthorId where tblbooks.id=:bookid";
+                                        $sql = "SELECT tblbooks.BookName,tblcategory.CategoryName,tblcategory.id as cid,tblauthors.AuthorName,tblauthors.id as athrid,tblbooks.ISBNNumber,tblbooks.BookPrice,tblbooks.shelf,tblbooks.bookdesc,tblbooks.quantity,tblbooks.id as bookid from  tblbooks join tblcategory on tblcategory.id=tblbooks.CatId join tblauthors on tblauthors.id=tblbooks.AuthorId where tblbooks.id=:bookid";
                                         $query = $dbh->prepare($sql);
                                         $query->bindParam(':bookid', $bookid, PDO::PARAM_STR);
                                         $query->execute();
@@ -156,8 +158,12 @@ if (strlen($_SESSION['alogin']) == 0) {
                                                 </div>
 
                                                 <div class="form-group">
-                                                    <label>Price in USD<span style="color:red;">*</span></label>
+                                                    <label>Price in RM<span style="color:red;">*</span></label>
                                                     <input class="form-control" type="text" name="price" value="<?php echo htmlentities($result->BookPrice); ?>" required="required" />
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Shelf<span style="color:red;">*</span></label>
+                                                    <input class="form-control" type="text" name="shelf" value="<?php echo htmlentities($result->shelf); ?>" required="required" />
                                                 </div>
                                             <?php }
                                     } ?>

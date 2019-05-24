@@ -71,7 +71,7 @@ if (strlen($_SESSION['alogin']) == 0) {
                                         <label>Category Name</label>
                                         <input class="form-control" type="text" name="category" autocomplete="off" required />
                                     </div>
-                                    <div class="form-group">
+                                    <!--<div class="form-group">
                                         <label>Status</label>
                                         <div class="radio">
                                             <label>
@@ -84,7 +84,7 @@ if (strlen($_SESSION['alogin']) == 0) {
                                             </label>
                                         </div>
 
-                                    </div>
+                                    </div>-->
                                     <button type="submit" name="create" class="btn btn-info">Create </button>
 
                                 </form>
