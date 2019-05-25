@@ -150,10 +150,10 @@ if (strlen($_SESSION['alogin']) == 0) {
                                             </div>
 
                                             <div class="form-group">
-                                                <label>Fine (in USD) :</label>
+                                                <label>Fine (in RM) :</label>
                                                 <?php
                                                 if ($result->fine == "") { ?>
-                                                    <input class="form-control" type="text" name="fine" id="fine" required />
+                                                    <input class="form-control" type="text" name="fine" id="fine" disabled placeholder="Not Applicable" />
 
                                                 <?php } else {
                                                 echo htmlentities($result->fine);
