@@ -68,6 +68,7 @@ if (strlen($_SESSION['login']) == 0) {
                                                     <th>Book Name</th>
                                                     <th>ISBN </th>
                                                     <th>Issued Date</th>
+                                                    <th>Expected Return Date</th>
                                                     <th>Return Date</th>
                                                     <th>Fine in(USD)</th>
                                                 </tr>
@@ -75,7 +76,7 @@ if (strlen($_SESSION['login']) == 0) {
                                             <tbody>
                                                 <?php
                                                 $sid = $_SESSION['stdid'];
-                                                $sql = "SELECT tblbooks.BookName,tblbooks.ISBNNumber,tblissuedbookdetails.IssuesDate,tblissuedbookdetails.ReturnDate,tblissuedbookdetails.id as rid,tblissuedbookdetails.fine from  tblissuedbookdetails join tblstudents on tblstudents.StudentId=tblissuedbookdetails.StudentId join tblbooks on tblbooks.id=tblissuedbookdetails.BookId where tblstudents.StudentId=:sid order by tblissuedbookdetails.id desc";
+                                                $sql = "SELECT tblbooks.BookName,tblbooks.ISBNNumber,tblissuedbookdetails.IssuesDate,tblissuedbookdetails.ExpectedReturnDate,tblissuedbookdetails.ReturnDate,tblissuedbookdetails.id as rid,tblissuedbookdetails.fine from  tblissuedbookdetails join tblstudents on tblstudents.StudentId=tblissuedbookdetails.StudentId join tblbooks on tblbooks.id=tblissuedbookdetails.BookId where tblstudents.StudentId=:sid order by tblissuedbookdetails.id desc";
                                                 $query = $dbh->prepare($sql);
                                                 $query->bindParam(':sid', $sid, PDO::PARAM_STR);
                                                 $query->execute();
@@ -88,6 +89,7 @@ if (strlen($_SESSION['login']) == 0) {
                                                             <td class="center"><?php echo htmlentities($result->BookName); ?></td>
                                                             <td class="center"><?php echo htmlentities($result->ISBNNumber); ?></td>
                                                             <td class="center"><?php echo htmlentities($result->IssuesDate); ?></td>
+                                                            <td class="center"><?php echo htmlentities($result->ExpectedReturnDate); ?></td>
                                                             <td class="center"><?php if ($result->ReturnDate == "") { ?>
                                                                     <span style="color:red">
                                                                         <?php echo htmlentities("Not Return Yet"); ?>

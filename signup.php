@@ -51,8 +51,12 @@ if (isset($_POST['signup'])) {
             echo "Sorry, your file was not uploaded.";
             // if everything is ok, try to upload file
         } else {
-            if (move_uploaded_file($_FILES["profilepic"]["tmp_name"], $target_file)) {
-                echo "The file " . basename($_FILES["profilepic"]["name"]) . " has been uploaded.";
+
+            $temp = explode(".", $_FILES["profilepic"]["name"]);
+            $newfilename = round(microtime(true)) . "." . end($temp);
+
+            if (move_uploaded_file($_FILES["profilepic"]["tmp_name"], $target_dir . $newfilename)) {
+                echo "The file " . $newfilename . " has been uploaded.";
             } else {
                 echo "Sorry, there was an error uploading your file.";
                 $uploadOk = 0;
@@ -74,7 +78,7 @@ if (isset($_POST['signup'])) {
             $mobileno = $_POST['mobileno'];
             $email = $_POST['email'];
             $password = md5($_POST['password']);
-            $profilepic = basename($_FILES["profilepic"]["name"]);
+            $profilepic = basename($newfilename);
             $status = 1;
             $sql = "INSERT INTO  tblstudents(StudentId,FullName,MobileNumber,EmailId,Password,Status, profilepic) VALUES(:StudentId,:fname,:mobileno,:email,:password,:status,:profilepic)";
             $query = $dbh->prepare($sql);
