@@ -31,7 +31,7 @@
                         <ul id="menu-top" class="nav navbar-nav navbar-right">
                             <li><a href="dashboard.php" class="menu-top-active">DASHBOARD</a></li>
 
-
+                            <li><a href="guide.php">GUIDE</a></li>
                             <li>
                                 <a href="#" class="dropdown-toggle" id="ddlmenuItem" data-toggle="dropdown"> Account <i class="fa fa-angle-down"></i></a>
                                 <ul class="dropdown-menu" role="menu" aria-labelledby="ddlmenuItem">
@@ -63,9 +63,7 @@
                             <li><a href="guide.php">GUIDE</a></li>
 
                             <li><a href="catelouge.php">Catelouge</a></li>
-                            <li><a href="adminlogin.php">Admin Login</a></li>
-                            <li><a href="signup.php">User Registration</a></li>
-                            <li><a href="index.php">User Login</a></li>
+                            
 
 
                             <li>

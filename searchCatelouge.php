@@ -67,8 +67,10 @@ include('includes/config.php');
                             </div>
                             <div class="panel-body">
                                 <div class="table-responsive">
-                                    
-                                            <?php $sql = "SELECT tblbooks.id,tblbooks.BookName,tblcategory.CategoryName,tblauthors.AuthorName,tblbooks.ISBNNumber,tblbooks.bookdesc,tblbooks.quantity,tblbooks.BookPrice,tblbooks.shelf,tblbooks.bookcover,tblbooks.id as bookid from  tblbooks join tblcategory on tblcategory.id=tblbooks.CatId join tblauthors on tblauthors.id=tblbooks.AuthorId";
+                                            
+                                            <?php
+                                            $bookid = $_GET['bookid'];
+                                            $sql = "SELECT tblbooks.id,tblbooks.BookName,tblcategory.CategoryName,tblauthors.AuthorName,tblbooks.ISBNNumber,tblbooks.bookdesc,tblbooks.quantity,tblbooks.BookPrice,tblbooks.shelf,tblbooks.bookcover,tblbooks.id as bookid from  tblbooks join tblcategory on tblcategory.id=tblbooks.CatId join tblauthors on tblauthors.id=tblbooks.AuthorId WHERE tblbooks.ISBNNumber=$bookid OR tblbooks.BookName LIKE $bookid";
                                             $query = $dbh->prepare($sql);
                                             $query->execute();
                                             $results = $query->fetchAll(PDO::FETCH_OBJ);
