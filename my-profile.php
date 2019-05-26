@@ -51,8 +51,12 @@ if(isset($_POST['change']))
         echo "Sorry, your file was not uploaded.";
         // if everything is ok, try to upload file
     } else {
-        if (move_uploaded_file($_FILES["profilepic"]["tmp_name"], $target_file)) {
-            echo "The file " . basename($_FILES["profilepic"]["name"]) . " has been uploaded.";
+
+        $temp = explode(".", $_FILES["profilepic"]["name"]);
+        $newfilename = round(microtime(true)) . "." . end($temp);
+
+        if (move_uploaded_file($_FILES["profilepic"]["tmp_name"], $target_dir . $newfilename)) {
+            echo "The file " . $newfilename . " has been uploaded.";
         } else {
             echo "Sorry, there was an error uploading your file.";
             $uploadOk = 0;
@@ -61,7 +65,7 @@ if(isset($_POST['change']))
     }    
 if ($uploadOk != 0) {  
 $sid=$_SESSION['stdid'];  
-$profilepic = basename($_FILES["profilepic"]["name"]);
+$profilepic = basename($newfilename);
 
 $sql="update tblstudents set profilepic=:profilepic where StudentId=:sid";
 $query = $dbh->prepare($sql);
