@@ -52,26 +52,24 @@ if (isset($_POST['login'])) {
     <!------MENU SECTION START-->
     <?php include('includes/header.php'); ?>
     <!-- MENU SECTION END-->
-    <div class="content-wrapper">
+    <div class="content-wrapperLoginAdmin">
         <div class="container">
-            <div class="row pad-botm">
                 <div class="col-md-12">
-                    <h4 class="header-line">ADMIN LOGIN FORM</h4>
+                    <h2 class="header-line"><span class="glyphicon glyphicon-user"></span> ADMIN LOGIN</h2>
                 </div>
-            </div>
 
             <!--LOGIN PANEL START-->
             <div class="row">
                 <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
                     <div class="panel panel-info">
                         <div class="panel-heading">
-                            LOGIN FORM
+                            ADMIN LOGIN FORM
                         </div>
                         <div class="panel-body">
                             <form role="form" method="post">
 
                                 <div class="form-group">
-                                    <label>Enter Username</label>
+                                    <label>Username</label>
                                     <input class="form-control" type="text" name="username" autocomplete="off" required />
                                 </div>
                                 <div class="form-group">
@@ -79,7 +77,7 @@ if (isset($_POST['login'])) {
                                     <input class="form-control" type="password" name="password" autocomplete="off" required />
                                 </div>
                                 <div class="form-group">
-                                    <label>Verification code : </label>
+                                    <label>Verification Code : </label>
                                     <input type="text" name="vercode" maxlength="5" autocomplete="off" required style="width: 150px; height: 25px;" />&nbsp;<img src="captcha.php">
                                 </div>
 

@@ -57,11 +57,26 @@
                     <div class="navbar-collapse collapse ">
                         <ul id="menu-top" class="nav navbar-nav navbar-right">
 
+
+                            <li><a href="index.php">HOME</a></li>
+                            <li><a href="aboutus.php">ABOUT US</a></li>
+                            <li><a href="guide.php">GUIDE</a></li>
+
                             <li><a href="catelouge.php">Catelouge</a></li>
                             <li><a href="adminlogin.php">Admin Login</a></li>
                             <li><a href="signup.php">User Registration</a></li>
                             <li><a href="index.php">User Login</a></li>
 
+
+                            <li>
+                                <a href="#" class="dropdown-toggle" id="ddlmenuItem" data-toggle="dropdown"> LOGIN <i class="fa fa-angle-down"></i></a>
+                                <ul class="dropdown-menu" role="menu" aria-labelledby="ddlmenuItem">
+                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="studentlogin.php">Student</a></li>
+                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="adminlogin.php">Admin</a></li>
+                                </ul>
+                            </li>
+
+                            <li><a href="signup.php">REGISTER</a></li>
 
                         </ul>
                     </div>
