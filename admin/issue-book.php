@@ -10,44 +10,55 @@ if (strlen($_SESSION['alogin']) == 0) {
         $studentid = strtoupper($_POST['studentid']);
         $bookid = $_POST['bookdetails'];
 
-        // Get current date
-        $currDate = date("Y-m-d h:i:s");
-        //$expectedDate = Date('Y-m-d', strotime("+14 days"));
-        $expectedDate = new DateTime($currDate);
-        $expectedDate->add(new DateInterval('P14D'));
-
-
-        $sql = "INSERT INTO  tblissuedbookdetails(StudentID,BookId,expectedReturnDate) VALUES(:studentid,:bookid,:expectedDate)";
-        $query = $dbh->prepare($sql);
-        $query->bindParam(':studentid', $studentid, PDO::PARAM_STR);
-        $query->bindParam(':bookid', $bookid, PDO::PARAM_STR);
-        $query->bindParam(':expectedDate', $expectedDate->format('Y-m-d'), PDO::PARAM_STR);
-        $query->execute();
-        $lastInsertId = $dbh->lastInsertId();
-        if ($lastInsertId) {
-            $_SESSION['msg'] = "Book issued successfully & quantity updated";
+        $sql1 = "SELECT id FROM tblissuedbookdetails WHERE StudentID = :studentid && RetrunStatus = NULL";
+        $query1 = $dbh->prepare($sql1);
+        $query1->bindParam(':studentid', $studentid, PDO::PARAM_STR);
+        $query1->execute();
+        $results1 = $query1->fetchAll(PDO::FETCH_OBJ);
+        $cnt = 1;
+        if ($query1->rowCount() >= 3) {
+            $_SESSION['error'] = "Student exceeded books borrowed!";
             header('location:manage-issued-books.php');
+        }else{
+            // Get current date
+            $currDate = date("Y-m-d h:i:s");
+            //$expectedDate = Date('Y-m-d', strotime("+14 days"));
+            $expectedDate = new DateTime($currDate);
+            $expectedDate->add(new DateInterval('P14D'));
 
-            /*$sqlSelectQty = "SELECT quantity FROM tblBooks WHERE BookId = :bookid LIMIT 1";
-            $query2 = $dbh->prepare($sqlSelectQty);
-            $query2->bindParam(':bookid', $bookid, PDO::PARAM_STR);
-            $query2->execute();
-            $row = $query2->fetchAll(PDO::FETCH_OBJ);*/
 
-            $sqlUpdate = "UPDATE tblbooks SET quantity = quantity - 1 WHERE id = :bookid";
-            $stmt = $dbh->prepare($sqlUpdate);
-            $stmt->bindParam(':bookid', $bookid, PDO::PARAM_STR);
-            $stmt->execute();
-            $updated = $dbh->updated();
-            if ($updated) {
+            $sql = "INSERT INTO  tblissuedbookdetails(StudentID,BookId,expectedReturnDate) VALUES(:studentid,:bookid,:expectedDate)";
+            $query = $dbh->prepare($sql);
+            $query->bindParam(':studentid', $studentid, PDO::PARAM_STR);
+            $query->bindParam(':bookid', $bookid, PDO::PARAM_STR);
+            $query->bindParam(':expectedDate', $expectedDate->format('Y-m-d'), PDO::PARAM_STR);
+            $query->execute();
+            $lastInsertId = $dbh->lastInsertId();
+            if ($lastInsertId) {
+                $_SESSION['msg'] = "Book issued successfully & quantity updated";
                 header('location:manage-issued-books.php');
+
+                /*$sqlSelectQty = "SELECT quantity FROM tblBooks WHERE BookId = :bookid LIMIT 1";
+                $query2 = $dbh->prepare($sqlSelectQty);
+                $query2->bindParam(':bookid', $bookid, PDO::PARAM_STR);
+                $query2->execute();
+                $row = $query2->fetchAll(PDO::FETCH_OBJ);*/
+
+                $sqlUpdate = "UPDATE tblbooks SET quantity = quantity - 1 WHERE id = :bookid";
+                $stmt = $dbh->prepare($sqlUpdate);
+                $stmt->bindParam(':bookid', $bookid, PDO::PARAM_STR);
+                $stmt->execute();
+                $updated = $dbh->updated();
+                if ($updated) {
+                    header('location:manage-issued-books.php');
+                } else {
+                    $_SESSION['error'] = "Something went wrong. Please try again";
+                    header('location:manage-issued-books.php');
+                }
             } else {
                 $_SESSION['error'] = "Something went wrong. Please try again";
                 header('location:manage-issued-books.php');
             }
-        } else {
-            $_SESSION['error'] = "Something went wrong. Please try again";
-            header('location:manage-issued-books.php');
         }
     }
     ?>
