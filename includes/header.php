@@ -39,7 +39,7 @@
                                     <li role="presentation"><a role="menuitem" tabindex="-1" href="change-password.php">Change Password</a></li>
                                 </ul>
                             </li>
-                            <li><a href="issued-books.php">Issued Books</a></li>
+                            <li><a href="issued-books.php">Issue Books</a></li>
                             <li><a href="catelouge.php">Catelogue</a></li>
 
                         </ul>
@@ -62,7 +62,7 @@
                             <li><a href="aboutus.php">ABOUT US</a></li>
                             <li><a href="guide.php">GUIDE</a></li>
 
-                            <li><a href="catelouge.php">Catelouge</a></li>
+                            <li><a href="catelouge.php">Catelogue</a></li>
                             
 
 
