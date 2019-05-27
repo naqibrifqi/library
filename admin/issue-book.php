@@ -16,7 +16,7 @@ if (strlen($_SESSION['alogin']) == 0) {
         $expectedDate = new DateTime($currDate);
         $expectedDate->add(new DateInterval('P14D'));
 
-        
+
         $sql = "INSERT INTO  tblissuedbookdetails(StudentID,BookId,expectedReturnDate) VALUES(:studentid,:bookid,:expectedDate)";
         $query = $dbh->prepare($sql);
         $query->bindParam(':studentid', $studentid, PDO::PARAM_STR);
@@ -39,14 +39,12 @@ if (strlen($_SESSION['alogin']) == 0) {
             $stmt->bindParam(':bookid', $bookid, PDO::PARAM_STR);
             $stmt->execute();
             $updated = $dbh->updated();
-            if($updated){
+            if ($updated) {
                 header('location:manage-issued-books.php');
-            }else{
+            } else {
                 $_SESSION['error'] = "Something went wrong. Please try again";
                 header('location:manage-issued-books.php');
             }
-
-
         } else {
             $_SESSION['error'] = "Something went wrong. Please try again";
             header('location:manage-issued-books.php');
@@ -126,55 +124,55 @@ if (strlen($_SESSION['alogin']) == 0) {
 
                     </div>
                     <div class="row">
-                        <div class="col-md-10 col-sm-6 col-xs-12 col-md-offset-1"">
-    <div class=" panel panel-info">
-                            <div class="panel-heading">
-                                Issue a New Book
-                            </div>
-                            <div class="panel-body">
-                                <form role="form" method="post">
+                        <div class="col-md-10 col-sm-6 col-xs-12 col-md-offset-1">
+                            <div class=" panel panel-info">
+                                <div class="panel-heading">
+                                    Issue a New Book
+                                </div>
+                                <div class="panel-body">
+                                    <form role="form" method="post">
 
-                                    <div class="form-group">
-                                        <label>Student id<span style="color:red;">*</span></label>
-                                        <input class="form-control" type="text" name="studentid" id="studentid" onBlur="getstudent()" autocomplete="off" required />
-                                    </div>
+                                        <div class="form-group">
+                                            <label>Student id<span style="color:red;">*</span></label>
+                                            <input class="form-control" type="text" name="studentid" id="studentid" onBlur="getstudent()" autocomplete="off" required />
+                                        </div>
 
-                                    <div class="form-group">
-                                        <span id="get_student_name" style="font-size:16px;"></span>
-                                    </div>
+                                        <div class="form-group">
+                                            <span id="get_student_name" style="font-size:16px;"></span>
+                                        </div>
 
-                                    <div class="form-group">
-                                        <label>ISBN Number or Book Title<span style="color:red;">*</span></label>
-                                        <input class="form-control" type="text" name="booikid" id="bookid" onBlur="getbook()" required="required" />
-                                    </div>
+                                        <div class="form-group">
+                                            <label>ISBN Number or Book Title<span style="color:red;">*</span></label>
+                                            <input class="form-control" type="text" name="booikid" id="bookid" onBlur="getbook()" required="required" />
+                                        </div>
 
-                                    <div class="form-group">
+                                        <div class="form-group">
 
-                                        <select class="form-control" name="bookdetails" id="get_book_name" readonly>
+                                            <select class="form-control" name="bookdetails" id="get_book_name" readonly>
 
-                                        </select>
-                                    </div>
-                                    <button type="submit" name="issue" id="submit" class="btn btn-info">Issue Book </button>
+                                            </select>
+                                        </div>
+                                        <button type="submit" name="issue" id="submit" class="btn btn-info">Issue Book </button>
 
-                                </form>
+                                    </form>
+                                </div>
                             </div>
                         </div>
+
                     </div>
 
                 </div>
-
             </div>
-        </div>
-        <!-- CONTENT-WRAPPER SECTION END-->
-        <?php include('includes/footer.php'); ?>
-        <!-- FOOTER SECTION END-->
-        <!-- JAVASCRIPT FILES PLACED AT THE BOTTOM TO REDUCE THE LOADING TIME  -->
-        <!-- CORE JQUERY  -->
-        <script src="assets/js/jquery-1.10.2.js"></script>
-        <!-- BOOTSTRAP SCRIPTS  -->
-        <script src="assets/js/bootstrap.js"></script>
-        <!-- CUSTOM SCRIPTS  -->
-        <script src="assets/js/custom.js"></script>
+            <!-- CONTENT-WRAPPER SECTION END-->
+            <?php include('includes/footer.php'); ?>
+            <!-- FOOTER SECTION END-->
+            <!-- JAVASCRIPT FILES PLACED AT THE BOTTOM TO REDUCE THE LOADING TIME  -->
+            <!-- CORE JQUERY  -->
+            <script src="assets/js/jquery-1.10.2.js"></script>
+            <!-- BOOTSTRAP SCRIPTS  -->
+            <script src="assets/js/bootstrap.js"></script>
+            <!-- CUSTOM SCRIPTS  -->
+            <script src="assets/js/custom.js"></script>
 
     </body>
 
