@@ -14,8 +14,8 @@ if (strlen($_SESSION['alogin']) == 0) {
     <meta name="description" content="" />
     <meta name="author" content="" />
     <!--[if IE]>
-          <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-          <![endif]-->
+            <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+            <![endif]-->
     <title>Online Library Management System | Admin Dash Board</title>
     <!-- BOOTSTRAP CORE STYLE  -->
     <link href="assets/css/bootstrap.css" rel="stylesheet" />
@@ -96,6 +96,9 @@ if (strlen($_SESSION['alogin']) == 0) {
               Times Books Returned
             </div>
           </div>
+        </div>
+        
+        <div class="row">
           <div class="col-md-3 col-sm-3 col-xs-6">
             <div class="alert alert-danger back-widget-set text-center">
               <i class="fa fa-users fa-5x"></i>
@@ -110,13 +113,6 @@ if (strlen($_SESSION['alogin']) == 0) {
               Registered Users
             </div>
           </div>
-
-        </div>
-
-
-
-        <div class="row">
-
           <div class="col-md-3 col-sm-3 col-xs-6">
             <div class="alert alert-success back-widget-set text-center">
               <i class="fa fa-user fa-5x"></i>
