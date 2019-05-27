@@ -35,6 +35,13 @@
                                 </ul>
                             </li>
                             <li>
+                                <a href="#" class="dropdown-toggle" id="ddlmenuItem" data-toggle="dropdown"> Publisher <i class="fa fa-angle-down"></i></a>
+                                <ul class="dropdown-menu" role="menu" aria-labelledby="ddlmenuItem">
+                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="add_publisher.php">Add Publisher</a></li>
+                                     <li role="presentation"><a role="menuitem" tabindex="-1" href="manage-publisher.php">Manage Publisher</a></li>
+                                </ul>
+                            </li>
+                            <li>
                                 <a href="#" class="dropdown-toggle" id="ddlmenuItem" data-toggle="dropdown"> Authors <i class="fa fa-angle-down"></i></a>
                                 <ul class="dropdown-menu" role="menu" aria-labelledby="ddlmenuItem">
                                     <li role="presentation"><a role="menuitem" tabindex="-1" href="add-author.php">Add Author</a></li>
