@@ -7,21 +7,20 @@ if (strlen($_SESSION['alogin']) == 0) {
 } else {
 
     if (isset($_POST['create'])) {
-        $category = $_POST['category'];
-        //$status = $_POST['status'];
-        $status = 1;
-        $sql = "INSERT INTO  tblcategory(CategoryName,Status) VALUES(:category,:status)";
+        $publisher = $_POST['publisher'];
+        $address = $_POST['address'];
+        $sql = "INSERT INTO  tblpublisher(PublisherName,address) VALUES(:publisher,:address)";
         $query = $dbh->prepare($sql);
-        $query->bindParam(':category', $category, PDO::PARAM_STR);
-        $query->bindParam(':status', $status, PDO::PARAM_STR);
+        $query->bindParam(':publisher', $publisher, PDO::PARAM_STR);
+        $query->bindParam(':address', $address, PDO::PARAM_STR);
         $query->execute();
         $lastInsertId = $dbh->lastInsertId();
         if ($lastInsertId) {
-            $_SESSION['msg'] = "Category added successfully";
-            header('location:manage-categories.php');
+            $_SESSION['msg'] = "Publisher added successfully";
+            header('location:manage-publisher.php');
         } else {
             $_SESSION['error'] = "Something went wrong. Please try again";
-            header('location:manage-categories.php');
+            header('location:manage-publisher.php');
         }
     }
     ?>
@@ -54,8 +53,8 @@ if (strlen($_SESSION['alogin']) == 0) {
                 <div class="container">
                     <div class="row pad-botm">
                         <div class="col-md-12">
-                            <p><a href="dashboard.php">Dashboard</a> > <a href="manage-categories.php">Manage Categories</a> > <a href="add-category.php">Add Category</a></p>
-                            <h4 class="header-line">Add category</h4>
+                            <p><a href="dashboard.php">Dashboard</a> > <a href="manage-categories.php">Manage Publisher</a> > <a href="add-category.php">Add Publisher</a></p>
+                            <h4 class="header-line">Add Publisher</h4>
 
                         </div>
 
@@ -64,28 +63,32 @@ if (strlen($_SESSION['alogin']) == 0) {
                         <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
                             <div class=" panel panel-info">
                                 <div class="panel-heading">
-                                    Category Info
+                                    Publisher Info
                                 </div>
                                 <div class="panel-body">
                                     <form role="form" method="post">
                                         <div class="form-group">
-                                            <label>Category Name</label>
-                                            <input class="form-control" type="text" name="category" autocomplete="off" required />
+                                            <label>Publisher Name</label>
+                                            <input class="form-control" type="text" name="publisher" autocomplete="off" required />
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Publisher Address</label>
+                                            <input class="form-control" type="text" name="address" autocomplete="off" required />
                                         </div>
                                         <!--<div class="form-group">
-                                            <label>Status</label>
-                                            <div class="radio">
-                                                <label>
-                                                    <input type="radio" name="status" id="status" value="1" checked="checked">Active
-                                                </label>
-                                            </div>
-                                            <div class="radio">
-                                                <label>
-                                                    <input type="radio" name="status" id="status" value="0">Inactive
-                                                </label>
-                                            </div>
+                                                <label>Status</label>
+                                                <div class="radio">
+                                                    <label>
+                                                        <input type="radio" name="status" id="status" value="1" checked="checked">Active
+                                                    </label>
+                                                </div>
+                                                <div class="radio">
+                                                    <label>
+                                                        <input type="radio" name="status" id="status" value="0">Inactive
+                                                    </label>
+                                                </div>
 
-                                        </div>-->
+                                            </div>-->
                                         <button type="submit" name="create" class="btn btn-info">Create </button>
 
                                     </form>
