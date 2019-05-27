@@ -251,7 +251,7 @@ if (strlen($_SESSION['alogin']) == 0) {
                                                         <td class="center"><?php echo htmlentities($result->IssuesDate); ?></td>
                                                         <td class="center"><?php echo htmlentities($result->ExpectedReturnDate); ?></td>
                                                         <td class="center"><?php
-                                                                            if ($result->fine != "" || $result->fine != null) {
+                                                                            if ($result->fine != "" || $result->fine != null || $result->fine != 0) {
                                                                                 echo '<span style="color:red">RM ' . htmlentities($result->fine) . '</span>';
                                                                             } else {
                                                                                 echo '<span style="color:green">None</span>';

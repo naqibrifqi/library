@@ -8,7 +8,10 @@ if (strlen($_SESSION['alogin']) == 0) {
 
     if (isset($_POST['return'])) {
         $rid = intval($_GET['rid']);
-        $fine = $_POST['fine'];
+        if($_POST['fine'] != null)
+            $fine = $_POST['fine'];
+        else
+            $fine = NULL;
         $rstatus = 1;
         $sql = "update tblissuedbookdetails set fine=:fine,RetrunStatus=:rstatus where id=:rid";
         $query = $dbh->prepare($sql);
