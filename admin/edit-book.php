@@ -79,6 +79,7 @@ if (strlen($_SESSION['alogin']) == 0) {
     if (isset($_POST['update'])) {
         $bookname = $_POST['bookname'];
         $category = $_POST['category'];
+        $publisher = $_POST['publisher'];
         $author = $_POST['author'];
         $isbn = $_POST['isbn'];
         $bookdesc = $_POST['bookdesc'];
@@ -86,19 +87,18 @@ if (strlen($_SESSION['alogin']) == 0) {
         $quantity = $_POST['quantity'];
         $price = $_POST['price'];
         $shelf = $_POST['shelf'];
-        $bookcover = basename($newfilename);
         $bookid = intval($_GET['bookid']);
-        $sql = "update  tblbooks set BookName=:bookname,CatId=:category,AuthorId=:author,ISBNNumber=:isbn,bookdesc=:bookdesc,quantity=:quantity,BookPrice=:price,shelf=:shelf,bookcover=:bookcover where id=:bookid";
+        $sql = "update tblbooks set BookName=:bookname,CatId=:category,pubId=:publisher,AuthorId=:author,ISBNNumber=:isbn,bookdesc=:bookdesc,quantity=:quantity,BookPrice=:price,shelf=:shelf where id=:bookid";
         $query = $dbh->prepare($sql);
         $query->bindParam(':bookname', $bookname, PDO::PARAM_STR);
         $query->bindParam(':category', $category, PDO::PARAM_STR);
+        $query->bindParam(':publisher', $publisher, PDO::PARAM_STR);
         $query->bindParam(':author', $author, PDO::PARAM_STR);
         $query->bindParam(':isbn', $isbn, PDO::PARAM_STR);
         $query->bindParam(':bookdesc', $bookdesc, PDO::PARAM_STR);
         $query->bindParam(':quantity', $quantity, PDO::PARAM_STR);
         $query->bindParam(':price', $price, PDO::PARAM_STR);
         $query->bindParam(':shelf', $shelf, PDO::PARAM_STR);
-        $query->bindParam(':bookcover', $bookcover, PDO::PARAM_STR);
         $query->bindParam(':bookid', $bookid, PDO::PARAM_STR);
         $query->execute();
         $_SESSION['msg'] = "Book info updated successfully";
@@ -170,7 +170,7 @@ if (strlen($_SESSION['alogin']) == 0) {
                                     <form role="form" method="post">
                                         <?php
                                         $bookid = intval($_GET['bookid']);
-                                        $sql = "SELECT tblbooks.BookName,tblcategory.CategoryName,tblcategory.id as cid,tblauthors.AuthorName,tblauthors.id as athrid,tblbooks.ISBNNumber,tblbooks.BookPrice,tblbooks.bookcover,tblbooks.bookdesc,tblbooks.shelf,tblbooks.quantity,tblbooks.id as bookid from  tblbooks join tblcategory on tblcategory.id=tblbooks.CatId join tblauthors on tblauthors.id=tblbooks.AuthorId where tblbooks.id=:bookid";
+                                        $sql = "SELECT tblbooks.BookName,tblcategory.CategoryName,tblpublisher.PublisherName,tblpublisher.id as pubId,tblcategory.id as cid,tblauthors.AuthorName,tblauthors.id as athrid,tblbooks.ISBNNumber,tblbooks.BookPrice,tblbooks.bookcover,tblbooks.bookdesc,tblbooks.shelf,tblbooks.quantity,tblbooks.id as bookid from  tblbooks join tblcategory on tblcategory.id=tblbooks.CatId join tblauthors on tblauthors.id=tblbooks.AuthorId JOIN tblPublisher ON tblPublisher.id = tblBooks.pubId where tblbooks.id=:bookid";
                                         $query = $dbh->prepare($sql);
                                         $query->bindParam(':bookid', $bookid, PDO::PARAM_STR);
                                         $query->execute();
@@ -214,6 +214,29 @@ if (strlen($_SESSION['alogin']) == 0) {
                                                     } ?>
                                                     </select>
                                                 </div>
+
+                                                <div class="form-group">
+                                                    <label> Publisher<span style="color:red;">*</span></label>
+                                                    <select class="form-control" name="publisher" required="required">
+                                                        <option value="<?php echo htmlentities($result->pubId); ?>"> <?php echo htmlentities($publishername = $result->PublisherName); ?></option>
+                                                        <?php
+                                                        $sql1 = "SELECT * from  tblPublisher";
+                                                        $query1 = $dbh->prepare($sql1);
+                                                        $query1->execute();
+                                                        $resultss = $query1->fetchAll(PDO::FETCH_OBJ);
+                                                        if ($query1->rowCount() > 0) {
+                                                            foreach ($resultss as $row) {
+                                                                if ($publishername == $row->PublisherName) {
+                                                                    continue;
+                                                                } else {
+                                                                    ?>
+                                                                    <option value="<?php echo htmlentities($row->id); ?>"><?php echo htmlentities($row->PublisherName); ?></option>
+                                                                <?php }
+                                                        }
+                                                    } ?>
+                                                    </select>
+                                                </div>
+                                                
 
 
                                                 <div class="form-group">
