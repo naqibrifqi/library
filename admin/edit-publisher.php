@@ -49,7 +49,7 @@ if (strlen($_SESSION['alogin']) == 0) {
                 <div class="container">
                     <div class="row pad-botm">
                         <div class="col-md-12">
-                            <p><a href="dashboard.php">Dashboard</a> > <a href="manage-categories.php">Manage publisher</a> > <a href="javascript:window.location.href=window.location.href">Edit Categories</a></p>
+                            <p><a href="dashboard.php">Dashboard</a> > <a href="manage-categories.php">Manage publisher</a> > <a href="javascript:window.location.href=window.location.href">Edit Publisher</a></p>
                             <h4 class="header-line">Edit Publisher</h4>
 
                         </div>
