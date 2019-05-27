@@ -75,7 +75,7 @@ if (isset($_GET['del'])) {
                             <div class="table-responsive">
                                 <?php
                                 $id = $_GET['id'];
-                                $sql = "SELECT tblbooks.id,tblbooks.BookName,tblcategory.CategoryName,tblauthors.AuthorName,tblbooks.ISBNNumber,tblbooks.bookdesc,tblbooks.quantity,tblbooks.BookPrice,tblbooks.shelf,tblbooks.bookcover,tblbooks.id as bookid from  tblbooks join tblcategory on tblcategory.id=tblbooks.CatId join tblauthors on tblauthors.id=tblbooks.AuthorId where tblbooks.id=$id";
+                                $sql = "SELECT tblbooks.id,tblbooks.BookName,tblcategory.CategoryName,tblauthors.AuthorName,tblpublisher.PublisherName,tblbooks.ISBNNumber,tblbooks.bookdesc,tblbooks.quantity,tblbooks.BookPrice,tblbooks.shelf,tblbooks.bookcover,tblbooks.id as bookid from  tblbooks join tblcategory on tblcategory.id=tblbooks.CatId join tblauthors on tblauthors.id=tblbooks.AuthorId JOIN tblpublisher on tblpublisher.id = tblbooks.pubid where tblbooks.id=$id";
                                 $query = $dbh->prepare($sql);
                                 $query->execute();
                                 $results = $query->fetchAll(PDO::FETCH_OBJ);
@@ -98,6 +98,7 @@ if (isset($_GET['del'])) {
                                                     <p><b>ISBN:</b> <?php echo htmlentities($result->ISBNNumber); ?> </P>
                                                     <p><b>Category:</b> <?php echo htmlentities($result->CategoryName); ?> </P>
                                                     <p><b>Author:</b> <?php echo htmlentities($result->AuthorName); ?> </P>
+                                                    <p><b>Publisher:</b> <?php echo htmlentities($result->PublisherName); ?> </P>
                                                     <p><b>Synopsis:</b> <?php echo htmlentities($result->bookdesc); ?> </P>
                                                     <p><b>Shelf:</b> <?php echo htmlentities($result->shelf); ?> </P>
                                             </table>

@@ -45,8 +45,8 @@ if (isset($_GET['del'])) {
         <div class="container">
             <div class="row pad-botm">
                 <div class="col-md-12">
-                    <p><a href="catelouge.php">Catelogue</a> </p>
-                    <h4 class="header-line">Book Catelogue</h4>
+                    <p><a href="catelouge.php">Catalogue</a> </p>
+                    <h4 class="header-line">Book Catalogue</h4>
                 </div>
 
                 <div style="float:right">

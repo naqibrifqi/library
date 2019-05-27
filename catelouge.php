@@ -45,8 +45,8 @@ include('includes/config.php');
             <div class="container">
                 <div class="row pad-botm">
                     <div class="col-md-12">
-                        <p><a href="catelouge.php">Catelogue</a> </p>
-                        <h4 class="header-line">Book Catelogue</h4>
+                        <p><a href="catelouge.php">Catalogue</a> </p>
+                        <h4 class="header-line">Book Catalogue</h4>
                     </div>
                 
                     <div style="float:right">
@@ -63,7 +63,7 @@ include('includes/config.php');
                         <!-- Advanced Tables -->
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                Books Catelouge
+                                Books Catalouge
                             </div>
                             <div class="panel-body">
                                 <div class="table-responsive">

@@ -40,7 +40,7 @@
                                 </ul>
                             </li>
                             <li><a href="issued-books.php">Issue Books</a></li>
-                            <li><a href="catelouge.php">Catelogue</a></li>
+                            <li><a href="catelouge.php">Catalogue</a></li>
 
                         </ul>
                     </div>
@@ -62,7 +62,7 @@
                             <li><a href="aboutus.php">ABOUT US</a></li>
                             <li><a href="guide.php">GUIDE</a></li>
 
-                            <li><a href="catelouge.php">Catelogue</a></li>
+                            <li><a href="catelouge.php">Catalogue</a></li>
                             
 
 
