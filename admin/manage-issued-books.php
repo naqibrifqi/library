@@ -8,7 +8,7 @@ if (strlen($_SESSION['alogin']) == 0) {
     header('location:index.php');
 } else {
 
-    if (isset($_POST['sendmail'])) {
+    /*if (isset($_POST['sendmail'])) {
 
         $sql = "SELECT tblStudents.EmailId from tblissuedbookdetails JOIN tblStudents ON tblissuedbookdetails.StudentId = tblStudents.StudentId WHERE tblissuedbookdetails.fine IS NOT NULL";
         $query = $dbh->prepare($sql);
@@ -54,8 +54,8 @@ if (strlen($_SESSION['alogin']) == 0) {
         }else{
             $_SESSION['error'] = "error";
             header('location:manage-issued-books.php');
-        }*/
-    }
+        }
+    }*/
 
     ?>
     <!DOCTYPE html>
@@ -176,9 +176,6 @@ if (strlen($_SESSION['alogin']) == 0) {
                     }*/
                         ?>
                     </div>
-                    <form role="form" method="post">
-                        <button type="submit" name="sendmail" id="submit" class="btn btn-primary">Send Email </button>
-                    </form>
                     <div class="row">
                         <?php if ($_SESSION['error'] != "") { ?>
                             <div class="col-md-6">
