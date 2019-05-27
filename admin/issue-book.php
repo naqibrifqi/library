@@ -10,7 +10,7 @@ if (strlen($_SESSION['alogin']) == 0) {
         $studentid = strtoupper($_POST['studentid']);
         $bookid = $_POST['bookdetails'];
 
-        $sql1 = "SELECT id FROM tblissuedbookdetails WHERE StudentID = :studentid && RetrunStatus = NULL";
+        $sql1 = "SELECT id FROM tblissuedbookdetails WHERE StudentID = :studentid && RetrunStatus IS NULL";
         $query1 = $dbh->prepare($sql1);
         $query1->bindParam(':studentid', $studentid, PDO::PARAM_STR);
         $query1->execute();
