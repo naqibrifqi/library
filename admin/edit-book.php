@@ -71,7 +71,7 @@ if (strlen($_SESSION['alogin']) == 0) {
             $query->bindParam(':bookcover', $bookcover, PDO::PARAM_STR);
             $query->execute();
 
-            echo '<script>alert("Your profile has been updated")</script>';
+            echo '<script>alert("Book info has been updated")</script>';
         } else
             echo "<script>alert('Something went wrong. Please try again [IMAGE_ERR]');</script>";
     }

@@ -108,7 +108,7 @@ if (strlen($_SESSION['alogin']) == 0) {
                                             <tr>
                                                 <th>#</th>
                                                 <th>Category</th>
-                                                <th>Status</th>
+                                                <!--<th>Status</th>-->
                                                 <th>Creation Date</th>
                                                 <th>Updation Date</th>
                                                 <th>Action</th>
@@ -125,11 +125,11 @@ if (strlen($_SESSION['alogin']) == 0) {
                                                     <tr class="odd gradeX">
                                                         <td class="center"><?php echo htmlentities($cnt); ?></td>
                                                         <td class="center"><?php echo htmlentities($result->CategoryName); ?></td>
-                                                        <td class="center"><?php if ($result->Status == 1) { ?>
+                                                        <!--<td class="center"><?php if ($result->Status == 1) { ?>
                                                                 <a href="#" class="btn btn-success btn-xs">Active</a>
                                                             <?php } else { ?>
                                                                 <a href="#" class="btn btn-danger btn-xs">Inactive</a>
-                                                            <?php } ?></td>
+                                                            <?php } ?></td>-->
                                                         <td class="center"><?php echo htmlentities($result->CreationDate); ?></td>
                                                         <td class="center"><?php echo htmlentities($result->UpdationDate); ?></td>
                                                         <td class="center">
