@@ -225,7 +225,7 @@ if (strlen($_SESSION['alogin']) == 0) {
                                         <thead>
                                             <tr>
                                                 <th>#</th>
-                                                <th>Order ID</th>
+                                                <th>Issue ID</th>
                                                 <th>Student ID</th>
                                                 <th>Student Name</th>
                                                 <th>Book Name</th>
