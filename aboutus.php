@@ -34,7 +34,9 @@ include('includes/config.php');
             <div class="row">
 
             <div class="text-justify" style="text-align:center">
-                <p>Established in 2019, this library was initially set up to serve students community around Kuala Lumpur. At the moment, we are serving more than 2,500 students.</p>
+                <p>Established in 2019, HANANANI Library was initially set up to serve students community around Kuala Lumpur. Has a total collection of more than a hundred titles up to date. The collection comprises of books, journals, conference proceedings and theses. At the moment, HANANANI Library are serving more than 2,500 students.</p>
+
+                <p>HANANANI located at Unit 10A, level 10 Q Sentral, 2A, Jalan Stesen Sentral 250470 KL Sentral, Kuala Lumpur.</p>
                 <br>
                 <center>
                 <button class="button1" type="button" disabled><h4><b>MISSION</b></h4></button>
@@ -45,7 +47,7 @@ include('includes/config.php');
                 <button class="button1" type="button" disabled><h4><b>VISION</b></h4></button>
                 <br>
                 <br>
-                <p><h5>This library will be an excellent hub for learning resources and facilities that will greatly improve the student information and knowledge experience</p></h5>
+                <p><h5>HANANANI library will be an excellent hub for learning resources and facilities that will greatly improve the student information and knowledge experience.</p></h5>
                 </center>
             </div>
            
@@ -130,7 +132,7 @@ include('includes/config.php');
                 <p><li>Bag excluding handbag; helmet and umbrella are not allowed to be brought into the library. Patrons may put those things at the baggage storage room outside the library.</p></li>
                 <p><li>Librarian have the right to ask anyone causing disturbances to leave the library.</p></li>
                 <p><li>Students may be required to show all books and items they carry for inspection at the exit gate before leaving the Library. ( Especially when the alarm triggered)</p></li>
-                <p><li>Patrons found breaking library rules will have their library privileges suspended</p></li>
+                <p><li>Students found breaking library rules will have their library privileges suspended</p></li>
             </ol>
             *All students must follow all the rules issued for this library.
             </div>
