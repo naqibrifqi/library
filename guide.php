@@ -74,7 +74,7 @@ include('includes/config.php');
                 <h4><b>Steps:</b></h4>
                 <p>1.  Login into account with registered email and password</p>
                 <p>2.  Click <b>Issued Books</b> tab</p>
-                <p>3.  Table of issue book details by Book Name, ISBN, Issue Date, Return Date and Fine</p>
+                <p>3.  Table of issue book details by Book Name, ISBN, Issue Date,Expected Return Date, Return Date and Fine</p>
 
             </div>    
 
